@@ -10,6 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatViewController" customModule="ChatApp" customModuleProvider="target">
             <connections>
+                <outlet property="chatCollectionView" destination="aZo-Gl-lML" id="wdw-oJ-pme"/>
+                <outlet property="collectionContentView" destination="x8Z-dd-KOs" id="d6X-32-wqo"/>
                 <outlet property="customSearchBarView" destination="Xgt-7c-yeF" id="BsR-PR-I2I"/>
                 <outlet property="view" destination="iN0-l3-epB" id="586-1R-TRO"/>
             </connections>
@@ -56,6 +58,28 @@
                         <constraint firstItem="rON-RN-bB6" firstAttribute="leading" secondItem="Xgt-7c-yeF" secondAttribute="leading" constant="17" id="kgF-gO-Vip"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x8Z-dd-KOs">
+                    <rect key="frame" x="0.0" y="185" width="428" height="609"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="aZo-Gl-lML">
+                            <rect key="frame" x="12" y="30" width="404" height="567"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lFY-d3-9y6">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="aZo-Gl-lML" secondAttribute="trailing" constant="12" id="6YA-Of-xT8"/>
+                        <constraint firstItem="aZo-Gl-lML" firstAttribute="leading" secondItem="x8Z-dd-KOs" secondAttribute="leading" constant="12" id="9Ak-bj-nAh"/>
+                        <constraint firstAttribute="bottom" secondItem="aZo-Gl-lML" secondAttribute="bottom" constant="12" id="NSS-5l-juj"/>
+                        <constraint firstItem="aZo-Gl-lML" firstAttribute="top" secondItem="x8Z-dd-KOs" secondAttribute="top" constant="30" id="tzk-IK-Zxp"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -64,10 +88,14 @@
                 <constraint firstItem="Xgt-7c-yeF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="7wa-IM-jsz"/>
                 <constraint firstItem="S9C-Iv-16u" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="FtG-4a-Fau"/>
                 <constraint firstItem="S9C-Iv-16u" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="Nf6-qc-evh"/>
+                <constraint firstItem="x8Z-dd-KOs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="SjR-C3-EeO"/>
+                <constraint firstAttribute="bottom" secondItem="x8Z-dd-KOs" secondAttribute="bottom" constant="132" id="Svs-Wg-UDS"/>
                 <constraint firstAttribute="trailing" secondItem="Ts8-v7-4M7" secondAttribute="trailing" constant="12" id="eHU-W5-ykn"/>
                 <constraint firstAttribute="trailing" secondItem="Xgt-7c-yeF" secondAttribute="trailing" constant="12" id="eUX-uD-Jwu"/>
+                <constraint firstAttribute="trailing" secondItem="x8Z-dd-KOs" secondAttribute="trailing" id="hhE-Re-ntZ"/>
                 <constraint firstItem="3DF-aP-QHP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="p34-mO-hJ6"/>
                 <constraint firstItem="Xgt-7c-yeF" firstAttribute="top" secondItem="S9C-Iv-16u" secondAttribute="bottom" constant="24" id="qDt-G5-sSf"/>
+                <constraint firstItem="x8Z-dd-KOs" firstAttribute="top" secondItem="Xgt-7c-yeF" secondAttribute="bottom" constant="22" id="qnc-fF-wzN"/>
                 <constraint firstAttribute="trailing" secondItem="3DF-aP-QHP" secondAttribute="trailing" id="sz4-Jg-PIu"/>
                 <constraint firstItem="Ts8-v7-4M7" firstAttribute="centerY" secondItem="S9C-Iv-16u" secondAttribute="centerY" id="tet-ni-zSu"/>
                 <constraint firstItem="3DF-aP-QHP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ywK-Ag-yoc"/>
