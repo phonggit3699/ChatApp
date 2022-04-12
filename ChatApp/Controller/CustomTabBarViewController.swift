@@ -20,16 +20,27 @@ class CustomTabBarViewController: UIViewController {
     
     var currentVC: UIViewController?
     
+    var storeOriginY: CGFloat = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
         customTabBar.layer.cornerRadius = 20
         setupChatVC()
+        
+        setupNotificationCenter()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name ("hiddenTabBar"), object: nil)
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        storeOriginY = customTabBar.frame.origin.y
         
         if let currentVC = self.currentVC {
 
@@ -60,6 +71,36 @@ class CustomTabBarViewController: UIViewController {
 }
 extension CustomTabBarViewController {
     
+    func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.hiddenTabBar(_:)), name: NSNotification.Name("hiddenTabBar"), object: nil)
+        
+    }
+    
+    @objc func hiddenTabBar(_ notification: Notification) {
+       
+        guard let isHidden: Bool = notification.userInfo?["isHidden"] as? Bool else {
+            print("no hidden")
+            return
+        }
+        
+        if isHidden == true {
+//            self.customTabBar.isHidden = true
+            
+            UIView.animate(withDuration: 0.5, delay: 0, options: .allowAnimatedContent) {
+                self.customTabBar.frame.origin.y = UIScreen.main.bounds.height + 200
+            } completion: { _ in
+                
+            }
+
+        }
+        else{
+//            self.customTabBar.isHidden = false
+            
+            self.customTabBar.frame.origin.y = self.storeOriginY
+        }
+     
+    }
+    
     func removeAllSubView(){
    
         for subview in itemTabBarView.subviews{
@@ -84,8 +125,12 @@ extension CustomTabBarViewController {
         self.btnChat.setImage(UIImage(named: "icChatBlue"), for: .normal)
         self.lblChat.textColor = UIColor(named: "darkBlue")
         
-        self.currentVC = ChatViewController(nibName: "ChatView", bundle: nil)
+        let listChatVC = ListChatViewController(nibName: "ListChatView", bundle: nil)
+        let navListChatVC = UINavigationController(rootViewController: listChatVC)
+        navListChatVC.isNavigationBarHidden = true
+        navListChatVC.isToolbarHidden = true
         
+        self.currentVC = navListChatVC
     }
     
     func setupProfileVC(){
