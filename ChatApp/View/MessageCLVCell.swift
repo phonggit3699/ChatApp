@@ -24,6 +24,7 @@ class MessageCLVCell: UICollectionViewCell {
         
         lblMessageRight.layer.masksToBounds = true
         lblMessageRight.layer.cornerRadius = lblMessageLeft.frame.height / 2
+        
     }
 
 }

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Photos
+import PhotosUI
 
 class ChatViewController: UIViewController {
     
@@ -17,15 +19,28 @@ class ChatViewController: UIViewController {
     
     @IBOutlet weak var btnAddPhoto: UIButton!
     
+    @IBOutlet weak var txtMessgae: UITextField!
     @IBOutlet weak var messageCollectionView: UICollectionView!
     
+    @IBOutlet weak var btnEmojiSend: UIButton!
+    @IBOutlet weak var selectionImageCollectionView: UICollectionView!
     var tfBackgroundViewOriginY: CGFloat = 0
     
     var storeMessageCollectionViewOriginY: CGFloat = 0
     
+    var storeSelectionImageCollectionViewOriginY: CGFloat = 0
+    
     var pushName: String?
     
     let userName: String = "Phong"
+    
+    var initialScrollDone: Bool = false
+    
+    var messages: [MessageModel] = testMessage
+    
+    var imageAsset: PHFetchResult<PHAsset>!
+    
+    var isOpenImageLibrary: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +49,24 @@ class ChatViewController: UIViewController {
         
         setupKeyBoard()
         
+        getImageAssetFromLibrary()
+        
         setupCollectionView()
         
-        scrollToBottomCollectionView()
+    }
+    @IBAction func tfMessgaeEditingChanged(_ sender: Any) {
+        
+        let sendImage: UIImage = UIImage(systemName: "paperplane.circle")!
+        
+        sendImage.withTintColor(UIColor(named: "lightGray")!)
+        
+        if txtMessgae.text != "" {
+            self.btnEmojiSend.setBackgroundImage(sendImage, for: .normal)
+        }
+        else{
+            self.btnEmojiSend.setBackgroundImage(UIImage(named: "icEmoji"), for: .normal)
+        }
+        
     }
     @IBAction func backAction(_ sender: Any) {
         let response: [String : Bool] = ["isHidden": false]
@@ -46,10 +76,68 @@ class ChatViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func btnSendTextOrEmoji(_ sender: Any) {
+        if let newMessage = txtMessgae.text, newMessage != "" {
+            self.messages.append(MessageModel(image: "", name: self.userName, message: newMessage))
+            self.messageCollectionView.reloadData()
+            self.scrollToBottomCollectionView()
+            self.txtMessgae.text = ""
+        }
+        
+    }
+    @IBAction func btnSelectImage(_ sender: Any) {
+        self.isOpenImageLibrary = !self.isOpenImageLibrary
+        UIView.animate(withDuration: 0.3, delay: 0, options: .allowAnimatedContent, animations: { [self] in
+            if self.isOpenImageLibrary == true {
+                self.selectionImageCollectionView.frame.origin.y = self.selectionImageCollectionView.frame.origin.y - 250
+                
+                messageCollectionView.frame.origin.y = storeMessageCollectionViewOriginY - 250
+                
+                tfBackgroundView.frame.origin.y = self.tfBackgroundViewOriginY - 250
+                btnAddPhoto.frame.origin.y = self.tfBackgroundViewOriginY - 250
+            }
+            else{
+                selectionImageCollectionView.frame.origin.y = storeSelectionImageCollectionViewOriginY
+                messageCollectionView.frame.origin.y = storeMessageCollectionViewOriginY
+                
+                tfBackgroundView.frame.origin.y = tfBackgroundViewOriginY
+                
+                btnAddPhoto.frame.origin.y  = tfBackgroundViewOriginY
+            }
+        }, completion: nil)
+        
+    }
+    override func viewDidLayoutSubviews() {
+        if self.initialScrollDone == false {
+            self.scrollToBottomCollectionView()
+            self.initialScrollDone = true
+        }
+    }
     
 }
 
 extension ChatViewController {
+    
+    
+    func getImageAssetFromLibrary() {
+        let options = PHFetchOptions()
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        options.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
+        options.fetchLimit = 30
+        
+        PHPhotoLibrary.requestAuthorization { status in
+            if status == .authorized {
+                self.imageAsset = PHAsset.fetchAssets(with: options)
+                DispatchQueue.main.async {
+                    self.selectionImageCollectionView.reloadData()
+                }
+                
+            }else {
+                print("not authorized")
+            }
+        }
+       
+    }
     
     func setupKeyBoard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil);
@@ -58,6 +146,7 @@ extension ChatViewController {
         
         self.tfBackgroundViewOriginY = tfBackgroundView.frame.origin.y - (tfBackgroundView.frame.height + 3)
         self.storeMessageCollectionViewOriginY = messageCollectionView.frame.origin.y
+        self.storeSelectionImageCollectionViewOriginY = self.selectionImageCollectionView.frame.origin.y - 50
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
@@ -105,7 +194,12 @@ extension ChatViewController {
     func setupCollectionView(){
         self.messageCollectionView.delegate = self
         self.messageCollectionView.dataSource = self
+        
+        self.selectionImageCollectionView.delegate = self
+        self.selectionImageCollectionView.dataSource = self
         self.messageCollectionView.register(UINib(nibName: MessageCLVCell.className, bundle: nil), forCellWithReuseIdentifier: MessageCLVCell.className)
+        
+        self.selectionImageCollectionView.register(UINib(nibName: ImageCLVCell.className, bundle: nil), forCellWithReuseIdentifier: ImageCLVCell.className)
     }
     
     func scrollToBottomCollectionView(){
@@ -119,30 +213,61 @@ extension ChatViewController {
 
 extension ChatViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return testMessage.count
+        if collectionView == self.messageCollectionView {
+            return messages.count
+        }
+        else{
+            if imageAsset !== nil && imageAsset.count > 0 {
+                return imageAsset.count
+            }else{
+                return 0
+            }
+        }
+       
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = self.messageCollectionView.dequeueReusableCell(withReuseIdentifier: MessageCLVCell.className, for: indexPath) as! MessageCLVCell
-    
         
-        if testMessage[indexPath.row].name == self.userName {
-            cell.friendImage.isHidden = true
-            cell.lblMessageLeft.isHidden = true
-            cell.lblTimeLeft.isHidden = true
-            cell.lblMessageRight.text = testMessage[indexPath.row].message
+        if collectionView == self.messageCollectionView {
+            let cell = self.messageCollectionView.dequeueReusableCell(withReuseIdentifier: MessageCLVCell.className, for: indexPath) as! MessageCLVCell
+            
+            cell.friendImage.isHidden = false
+            cell.lblMessageLeft.isHidden = false
+            cell.lblTimeLeft.isHidden = false
+            cell.lblMessageRight.isHidden = false
+            cell.lblTimeRight.isHidden = false
+        
+            if messages[indexPath.row].name == self.userName {
+                cell.friendImage.isHidden = true
+                cell.lblMessageLeft.isHidden = true
+                cell.lblTimeLeft.isHidden = true
+                cell.lblMessageRight.text = messages[indexPath.row].message
+            }
+            else
+            {
+                cell.lblMessageRight.isHidden = true
+                cell.lblTimeRight.isHidden = true
+                cell.lblMessageLeft.text = messages[indexPath.row].message
+                
+            }
+    //        cell.layoutIfNeeded()
+            return cell
         }
-        else
-        {
-            cell.lblMessageRight.isHidden = true
-            cell.lblTimeRight.isHidden = true
-            cell.lblMessageLeft.text = testMessage[indexPath.row].message
+        else{
+            let cell = self.selectionImageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCLVCell.className, for: indexPath) as! ImageCLVCell
+            
+            if let asset = self.imageAsset?.object(at: indexPath.row) {
+                PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 122, height: 122), contentMode: PHImageContentMode.aspectFit , options: nil) { (image, userInfo) -> Void in
+                    cell.image.image = image
+                }
+            }
+       
+           
+            return cell
         }
-
-        return cell
+ 
     }
-    
-    
+
 }
 
 extension ChatViewController: UICollectionViewDelegateFlowLayout {
@@ -151,30 +276,38 @@ extension ChatViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 15
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-       return 15
+       return 3
        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 256, height: 0))
-        if testMessage.count > 0 {
-            label.text = testMessage[indexPath.row].message
+        if collectionView == self.messageCollectionView {
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 256, height: 0))
+            if testMessage.count > 0 {
+                label.text = messages[indexPath.row].message
+            }
+            
+            label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+            label.numberOfLines = 0
+            label.sizeToFit()
+            
+            let cellHeight = label.frame.height + 40
+     
+            let size: CGSize = CGSize(width: self.messageCollectionView.bounds.width, height: cellHeight)
+            
+            return size
         }
-        
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.numberOfLines = 0
-        label.sizeToFit()
-        
-        let cellHeight = label.frame.height + 40
-        
-        let size: CGSize = CGSize(width: self.messageCollectionView.frame.width, height: cellHeight)
-        
-        return size
+       
+        else{
+            let size: CGFloat = self.messageCollectionView.frame.width / 3 - 2
+            
+            return CGSize(width: size, height: size)
+        }
     }
 }
 

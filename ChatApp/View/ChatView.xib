@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,10 +12,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatViewController" customModule="ChatApp" customModuleProvider="target">
             <connections>
                 <outlet property="btnAddPhoto" destination="LkB-PZ-M42" id="5gn-TX-5db"/>
+                <outlet property="btnEmojiSend" destination="re2-m9-Zkv" id="ubj-hk-HLJ"/>
                 <outlet property="chatContentView" destination="Iyp-Jz-l7h" id="uC7-8R-7XK"/>
                 <outlet property="lblName" destination="bW4-cz-GIo" id="I0S-x9-fIW"/>
-                <outlet property="messageCollectionView" destination="d3u-Zw-IDA" id="hO7-ey-mLh"/>
+                <outlet property="messageCollectionView" destination="d3u-Zw-IDA" id="VIt-ni-cKv"/>
+                <outlet property="selectionImageCollectionView" destination="oKg-w0-v92" id="U78-Kf-Zbn"/>
                 <outlet property="tfBackgroundView" destination="yIP-f5-iGF" id="5zI-nQ-BUi"/>
+                <outlet property="txtMessgae" destination="RIu-Vm-sG4" id="1Aa-GP-hsD"/>
                 <outlet property="view" destination="iN0-l3-epB" id="dqb-02-xdQ"/>
             </connections>
         </placeholder>
@@ -44,14 +48,25 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="re2-m9-Zkv">
                                     <rect key="frame" x="288" y="14" width="24" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="24" id="IVn-L7-wQQ"/>
+                                        <constraint firstAttribute="width" constant="24" id="Sr7-RN-7tz"/>
+                                    </constraints>
+                                    <color key="tintColor" name="lightGray"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" backgroundImage="icEmoji"/>
+                                    <connections>
+                                        <action selector="btnSendTextOrEmoji:" destination="-1" eventType="touchUpInside" id="9cy-t5-aV0"/>
+                                    </connections>
                                 </button>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nhap tin nhan..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RIu-Vm-sG4">
                                     <rect key="frame" x="20" y="15.5" width="254" height="21"/>
                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                     <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <action selector="tfMessgaeEditingChanged:" destination="-1" eventType="editingChanged" id="2HP-Y9-glD"/>
+                                    </connections>
                                 </textField>
                             </subviews>
                             <color key="backgroundColor" red="0.96470588450000005" green="0.96470588450000005" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -68,18 +83,36 @@
                             <rect key="frame" x="12" y="682" width="52" height="52"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal" backgroundImage="btnAddPhoto"/>
+                            <connections>
+                                <action selector="btnSelectImage:" destination="-1" eventType="touchUpInside" id="8mU-oS-C4j"/>
+                            </connections>
                         </button>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="oKg-w0-v92">
+                            <rect key="frame" x="12" y="758" width="390" height="250"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="250" id="VJZ-b3-9XE"/>
+                            </constraints>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cud-NQ-Eop">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="yIP-f5-iGF" firstAttribute="centerY" secondItem="LkB-PZ-M42" secondAttribute="centerY" id="IYT-Nh-yRb"/>
                         <constraint firstItem="yIP-f5-iGF" firstAttribute="leading" secondItem="LkB-PZ-M42" secondAttribute="trailing" constant="12" id="Rkb-ea-h4g"/>
+                        <constraint firstItem="oKg-w0-v92" firstAttribute="leading" secondItem="Iyp-Jz-l7h" secondAttribute="leading" constant="12" id="VLb-5i-zCg"/>
                         <constraint firstItem="d3u-Zw-IDA" firstAttribute="leading" secondItem="Iyp-Jz-l7h" secondAttribute="leading" constant="12" id="VPJ-CF-trJ"/>
                         <constraint firstAttribute="trailing" secondItem="d3u-Zw-IDA" secondAttribute="trailing" constant="12" id="bhZ-XB-TGJ"/>
                         <constraint firstItem="LkB-PZ-M42" firstAttribute="leading" secondItem="Iyp-Jz-l7h" secondAttribute="leading" constant="12" id="l5o-2x-XUp"/>
                         <constraint firstAttribute="trailing" secondItem="yIP-f5-iGF" secondAttribute="trailing" constant="12" id="mlV-Dl-UYV"/>
                         <constraint firstItem="d3u-Zw-IDA" firstAttribute="top" secondItem="Iyp-Jz-l7h" secondAttribute="top" constant="22" id="ngx-sg-HXY"/>
                         <constraint firstItem="Xqk-aA-Ksp" firstAttribute="centerX" secondItem="Iyp-Jz-l7h" secondAttribute="centerX" id="nkO-gw-Ldl"/>
+                        <constraint firstAttribute="trailing" secondItem="oKg-w0-v92" secondAttribute="trailing" constant="12" id="uRW-eb-Coa"/>
                         <constraint firstItem="Xqk-aA-Ksp" firstAttribute="top" secondItem="Iyp-Jz-l7h" secondAttribute="top" constant="-14" id="zpS-tW-6lO"/>
                     </constraints>
                 </view>
@@ -120,6 +153,7 @@
                 <constraint firstItem="LcY-x8-A19" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="4gt-iV-xHY"/>
                 <constraint firstItem="bW4-cz-GIo" firstAttribute="leading" secondItem="kMD-JB-S93" secondAttribute="trailing" constant="12" id="7Tp-oJ-msf"/>
                 <constraint firstItem="Iyp-Jz-l7h" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ANW-dQ-qaf"/>
+                <constraint firstItem="oKg-w0-v92" firstAttribute="top" secondItem="Iyp-Jz-l7h" secondAttribute="bottom" id="Aqr-eT-LcK"/>
                 <constraint firstItem="LcY-x8-A19" firstAttribute="centerY" secondItem="kMD-JB-S93" secondAttribute="centerY" id="CBU-eV-FWY"/>
                 <constraint firstItem="LkB-PZ-M42" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="10" id="D9Z-52-B2l"/>
                 <constraint firstItem="kMD-JB-S93" firstAttribute="leading" secondItem="LcY-x8-A19" secondAttribute="trailing" constant="12" id="J45-eG-mXT"/>
@@ -142,6 +176,9 @@
         <image name="elipBg" width="83" height="28"/>
         <image name="icBack" width="24" height="24"/>
         <image name="icEmoji" width="24" height="24"/>
+        <namedColor name="lightGray">
+            <color red="0.792156862745098" green="0.792156862745098" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

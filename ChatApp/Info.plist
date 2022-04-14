@@ -26,5 +26,9 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Please allow</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please allow</string>
 </dict>
 </plist>

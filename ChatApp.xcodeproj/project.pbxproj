@@ -22,6 +22,8 @@
 		3DAB061227FE92B200775498 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DAB061127FE92B200775498 /* ProfileView.xib */; };
 		3DAB061427FE931500775498 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAB061327FE931500775498 /* ProfileViewController.swift */; };
 		3DAB061627FE932400775498 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAB061527FE932400775498 /* FriendViewController.swift */; };
+		3DE6EBA728068335005CA04D /* ImageCLVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6EBA528068335005CA04D /* ImageCLVCell.swift */; };
+		3DE6EBA828068335005CA04D /* ImageCLVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DE6EBA628068335005CA04D /* ImageCLVCell.xib */; };
 		3DF51A0C28051A3B00E508AC /* MessageCLVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF51A0A28051A3B00E508AC /* MessageCLVCell.swift */; };
 		3DF51A0D28051A3B00E508AC /* MessageCLVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DF51A0B28051A3B00E508AC /* MessageCLVCell.xib */; };
 		3DF51A0F2805213200E508AC /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF51A0E2805213200E508AC /* MessageModel.swift */; };
@@ -51,6 +53,8 @@
 		3DAB061127FE92B200775498 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
 		3DAB061327FE931500775498 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		3DAB061527FE932400775498 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
+		3DE6EBA528068335005CA04D /* ImageCLVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCLVCell.swift; sourceTree = "<group>"; };
+		3DE6EBA628068335005CA04D /* ImageCLVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCLVCell.xib; sourceTree = "<group>"; };
 		3DF51A0A28051A3B00E508AC /* MessageCLVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCLVCell.swift; sourceTree = "<group>"; };
 		3DF51A0B28051A3B00E508AC /* MessageCLVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCLVCell.xib; sourceTree = "<group>"; };
 		3DF51A0E2805213200E508AC /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
@@ -168,6 +172,8 @@
 				3D1DD4BB2803CF23002E1BF5 /* ResetPasswordView.xib */,
 				3DF51A0A28051A3B00E508AC /* MessageCLVCell.swift */,
 				3DF51A0B28051A3B00E508AC /* MessageCLVCell.xib */,
+				3DE6EBA528068335005CA04D /* ImageCLVCell.swift */,
+				3DE6EBA628068335005CA04D /* ImageCLVCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -183,7 +189,7 @@
 				3DF7095427FD30F20048CC96 /* Sources */,
 				3DF7095527FD30F20048CC96 /* Frameworks */,
 				3DF7095627FD30F20048CC96 /* Resources */,
-				B8676598367806E546F3758D /* [CP] Embed Pods Frameworks */,
+				32F8D7CA3CABC9066C544243 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -237,6 +243,7 @@
 				3DAB061227FE92B200775498 /* ProfileView.xib in Resources */,
 				3DF7096527FD30F50048CC96 /* Assets.xcassets in Resources */,
 				3DAB060E27FE90C000775498 /* ListChatView.xib in Resources */,
+				3DE6EBA828068335005CA04D /* ImageCLVCell.xib in Resources */,
 				3DF7096327FD30F20048CC96 /* Main.storyboard in Resources */,
 				3DF7097C27FD3CCE0048CC96 /* SignUpView.xib in Resources */,
 				3D7BBF29280074AA00A5220A /* ChatTBVCell.xib in Resources */,
@@ -249,7 +256,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B8676598367806E546F3758D /* [CP] Embed Pods Frameworks */ = {
+		32F8D7CA3CABC9066C544243 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -307,6 +314,7 @@
 				3DF51A0F2805213200E508AC /* MessageModel.swift in Sources */,
 				3DAB061427FE931500775498 /* ProfileViewController.swift in Sources */,
 				3D1DD4BE2803D078002E1BF5 /* ResetPasswordViewController.swift in Sources */,
+				3DE6EBA728068335005CA04D /* ImageCLVCell.swift in Sources */,
 				3DAB060827FE79C300775498 /* ListChatViewController.swift in Sources */,
 				3DAB060627FE757600775498 /* SignUpViewController.swift in Sources */,
 			);
