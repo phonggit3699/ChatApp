@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct MessageModel: Identifiable, Codable {
+struct MessageModel: Identifiable, Decodable {
     var id: String = UUID().uuidString
     
     var image: String

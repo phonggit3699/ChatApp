@@ -42,10 +42,18 @@ class SignUpViewController: UIViewController {
             btnCheck.setBackgroundImage(UIImage(named: "check"), for: .normal)
         }
         
+        if txtUser.text != "" && txtEmail.text != "" && txtPassword.text != "" && isCheck == true{
+            btnSignUp.isEnabled = true
+            btnSignUp.backgroundColor = UIColor(named: "darkBlue")
+        }
+        else{
+            btnSignUp.isEnabled = false
+            btnSignUp.backgroundColor =  UIColor(named: "lightGray")
+        }
     }
     
     @IBAction func tfUserEditingChanged(_ sender: Any) {
-        if txtUser.text != "" && txtEmail.text != "" && txtPassword.text != "" {
+        if txtUser.text != "" && txtEmail.text != "" && txtPassword.text != "" && isCheck == true{
             btnSignUp.isEnabled = true
             btnSignUp.backgroundColor = UIColor(named: "darkBlue")
         }
@@ -56,7 +64,7 @@ class SignUpViewController: UIViewController {
     }
     
     @IBAction func tfEmailEditingChanged(_ sender: Any) {
-        if txtUser.text != "" && txtEmail.text != "" && txtPassword.text != "" {
+        if txtUser.text != "" && txtEmail.text != "" && txtPassword.text != "" && isCheck == true{
             btnSignUp.isEnabled = true
             btnSignUp.backgroundColor = UIColor(named: "darkBlue")
         }
@@ -67,7 +75,7 @@ class SignUpViewController: UIViewController {
     }
     
     @IBAction func tfPassEditingChanged(_ sender: Any) {
-        if txtUser.text != "" && txtEmail.text != "" && txtPassword.text != "" {
+        if txtUser.text != "" && txtEmail.text != "" && txtPassword.text != "" && isCheck == true{
             btnSignUp.isEnabled = true
             btnSignUp.backgroundColor = UIColor(named: "darkBlue")
         }
@@ -76,5 +84,7 @@ class SignUpViewController: UIViewController {
             btnSignUp.backgroundColor =  UIColor(named: "lightGray")
         }
     }
- 
+    @IBAction func btnAcceptPrivacy(_ sender: Any) {
+    }
+    
 }

@@ -7,4 +7,5 @@ target 'ChatApp' do
 
   # Pods for ChatApp
 	pod 'Socket.IO-Client-Swift'
+pod 'Alamofire'
 end

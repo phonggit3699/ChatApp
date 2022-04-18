@@ -8,10 +8,12 @@
 import UIKit
 import Photos
 import PhotosUI
+import SocketIO
 
 class ChatViewController: UIViewController {
     
     @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var avatarImg: UIImageView!
     
     @IBOutlet weak var chatContentView: UIView!
     
@@ -26,21 +28,27 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var selectionImageCollectionView: UICollectionView!
     var tfBackgroundViewOriginY: CGFloat = 0
     
+    var cache = NSCache<AnyObject, AnyObject>()
+    
     var storeMessageCollectionViewOriginY: CGFloat = 0
     
     var storeSelectionImageCollectionViewOriginY: CGFloat = 0
     
     var pushName: String?
     
+    var avatarImgUrl: String?
+    
     let userName: String = "Phong"
     
     var initialScrollDone: Bool = false
     
-    var messages: [MessageModel] = testMessage
+    var messages: [MessageModel] = []
     
     var imageAsset: PHFetchResult<PHAsset>!
     
     var isOpenImageLibrary: Bool = false
+    
+    let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(true), .compress])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +60,8 @@ class ChatViewController: UIViewController {
         getImageAssetFromLibrary()
         
         setupCollectionView()
+        
+        setupSocket()
         
     }
     @IBAction func tfMessgaeEditingChanged(_ sender: Any) {
@@ -77,11 +87,14 @@ class ChatViewController: UIViewController {
     }
     
     @IBAction func btnSendTextOrEmoji(_ sender: Any) {
+        
+        let socket = manager.defaultSocket
+        
         if let newMessage = txtMessgae.text, newMessage != "" {
-            self.messages.append(MessageModel(image: "", name: self.userName, message: newMessage))
-            self.messageCollectionView.reloadData()
-            self.scrollToBottomCollectionView()
+            let newData: [String: String] = ["image": "", "name": "Phong", "message": newMessage]
+            socket.emit("phong message", newData)
             self.txtMessgae.text = ""
+            
         }
         
     }
@@ -118,6 +131,33 @@ class ChatViewController: UIViewController {
 
 extension ChatViewController {
     
+    func imageForUrl(urlString: String, completionHandler:@escaping (_ image: UIImage?) -> ()) {
+
+        let data: NSData? = self.cache.object(forKey: urlString as AnyObject) as? NSData
+        
+        if let imageData = data {
+            let image = UIImage(data: imageData as Data)
+            DispatchQueue.main.async {
+                completionHandler(image)
+            }
+            return
+        }
+        
+        let downloadTask: URLSessionDataTask = URLSession.shared.dataTask(with: URL.init(string: urlString)!) { (data, response, error) in
+            if error == nil {
+                if data != nil {
+                    let image = UIImage.init(data: data!)
+                    self.cache.setObject(data! as AnyObject, forKey: urlString as AnyObject)
+                    DispatchQueue.main.async {
+                        completionHandler(image)
+                    }
+                }
+            } else {
+                completionHandler(nil)
+            }
+        }
+        downloadTask.resume()
+    }
     
     func getImageAssetFromLibrary() {
         let options = PHFetchOptions()
@@ -178,6 +218,16 @@ extension ChatViewController {
             self.lblName.text = pushName
         }
         
+        if self.avatarImgUrl != nil {
+            imageForUrl(urlString: self.avatarImgUrl!) { image in
+                if image != nil {
+                    self.avatarImg.image = image
+                }
+            }
+        }
+        
+        avatarImg.layer.cornerRadius = avatarImg.frame.height / 2
+        
         chatContentView.layer.cornerRadius = 30
         
         chatContentView.clipsToBounds = true
@@ -207,6 +257,26 @@ extension ChatViewController {
         self.messageCollectionView.scrollToLast()
     }
     
+    
+    func setupSocket(){
+        
+        let socket = manager.defaultSocket
+        
+        socket.on(clientEvent: .connect) {data, ack in
+            print("socket connected")
+        }
+        
+        socket.on("phong message") { data, ack in
+            if let message: [String: String] = data[0] as? [String: String],  let name: String = message["name"], let image: String = message["image"], let messageNew: String = message["message"]  {
+                
+                self.messages.append(MessageModel(image: image, name: name, message: messageNew))
+                
+                self.messageCollectionView.reloadData()
+                self.scrollToBottomCollectionView()
+            }
+        }
+        socket.connect()
+    }
 }
 
 
@@ -304,7 +374,7 @@ extension ChatViewController: UICollectionViewDelegateFlowLayout {
         }
        
         else{
-            let size: CGFloat = self.messageCollectionView.frame.width / 3 - 2
+            let size: CGFloat = self.messageCollectionView.frame.width / 3 + 6
             
             return CGSize(width: size, height: size)
         }

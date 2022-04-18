@@ -150,6 +150,9 @@
                             <state key="normal" title="Đăng nhập ngay">
                                 <color key="titleColor" red="0.2734625638" green="0.3224664927" blue="0.70592039819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </state>
+                            <connections>
+                                <action selector="backAction:" destination="-1" eventType="touchUpInside" id="qBx-Ha-wk2"/>
+                            </connections>
                         </button>
                     </subviews>
                 </stackView>

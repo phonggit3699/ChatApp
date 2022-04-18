@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatViewController" customModule="ChatApp" customModuleProvider="target">
             <connections>
+                <outlet property="avatarImg" destination="kMD-JB-S93" id="yDA-Ei-DRh"/>
                 <outlet property="btnAddPhoto" destination="LkB-PZ-M42" id="5gn-TX-5db"/>
                 <outlet property="btnEmojiSend" destination="re2-m9-Zkv" id="ubj-hk-HLJ"/>
                 <outlet property="chatContentView" destination="Iyp-Jz-l7h" id="uC7-8R-7XK"/>
@@ -88,7 +89,7 @@
                             </connections>
                         </button>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="oKg-w0-v92">
-                            <rect key="frame" x="12" y="758" width="390" height="250"/>
+                            <rect key="frame" x="0.0" y="758" width="414" height="250"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="250" id="VJZ-b3-9XE"/>
@@ -105,14 +106,14 @@
                     <constraints>
                         <constraint firstItem="yIP-f5-iGF" firstAttribute="centerY" secondItem="LkB-PZ-M42" secondAttribute="centerY" id="IYT-Nh-yRb"/>
                         <constraint firstItem="yIP-f5-iGF" firstAttribute="leading" secondItem="LkB-PZ-M42" secondAttribute="trailing" constant="12" id="Rkb-ea-h4g"/>
-                        <constraint firstItem="oKg-w0-v92" firstAttribute="leading" secondItem="Iyp-Jz-l7h" secondAttribute="leading" constant="12" id="VLb-5i-zCg"/>
+                        <constraint firstItem="oKg-w0-v92" firstAttribute="leading" secondItem="Iyp-Jz-l7h" secondAttribute="leading" id="VLb-5i-zCg"/>
                         <constraint firstItem="d3u-Zw-IDA" firstAttribute="leading" secondItem="Iyp-Jz-l7h" secondAttribute="leading" constant="12" id="VPJ-CF-trJ"/>
                         <constraint firstAttribute="trailing" secondItem="d3u-Zw-IDA" secondAttribute="trailing" constant="12" id="bhZ-XB-TGJ"/>
                         <constraint firstItem="LkB-PZ-M42" firstAttribute="leading" secondItem="Iyp-Jz-l7h" secondAttribute="leading" constant="12" id="l5o-2x-XUp"/>
                         <constraint firstAttribute="trailing" secondItem="yIP-f5-iGF" secondAttribute="trailing" constant="12" id="mlV-Dl-UYV"/>
                         <constraint firstItem="d3u-Zw-IDA" firstAttribute="top" secondItem="Iyp-Jz-l7h" secondAttribute="top" constant="22" id="ngx-sg-HXY"/>
                         <constraint firstItem="Xqk-aA-Ksp" firstAttribute="centerX" secondItem="Iyp-Jz-l7h" secondAttribute="centerX" id="nkO-gw-Ldl"/>
-                        <constraint firstAttribute="trailing" secondItem="oKg-w0-v92" secondAttribute="trailing" constant="12" id="uRW-eb-Coa"/>
+                        <constraint firstAttribute="trailing" secondItem="oKg-w0-v92" secondAttribute="trailing" id="uRW-eb-Coa"/>
                         <constraint firstItem="Xqk-aA-Ksp" firstAttribute="top" secondItem="Iyp-Jz-l7h" secondAttribute="top" constant="-14" id="zpS-tW-6lO"/>
                     </constraints>
                 </view>
@@ -134,8 +135,12 @@
                         <action selector="backAction:" destination="-1" eventType="touchUpInside" id="Ouo-4s-BB1"/>
                     </connections>
                 </button>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circleAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="kMD-JB-S93">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circleAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="kMD-JB-S93">
                     <rect key="frame" x="48" y="54" width="58" height="58"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="58" id="58s-fh-7zG"/>
+                        <constraint firstAttribute="width" constant="58" id="qcN-EN-enp"/>
+                    </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pham Van Phong" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bW4-cz-GIo">
                     <rect key="frame" x="118" y="72" width="145" height="22"/>

@@ -14,10 +14,11 @@ class ChatTBVCell: UITableViewCell {
     
     @IBOutlet weak var lblNumberNewMsg: UILabel!
 
+    @IBOutlet weak var avatarImg: UIImageView!
     @IBOutlet weak var lblLastMessage: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.avatarImg.layer.cornerRadius = avatarImg.frame.height / 2
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

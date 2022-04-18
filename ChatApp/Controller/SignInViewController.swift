@@ -57,7 +57,7 @@ class SignInViewController: UIViewController {
         
         signUpVC.modalPresentationStyle = .fullScreen
         
-        self.present(signUpVC, animated: false)
+        self.present(signUpVC, animated: true)
     }
     @IBAction func loginAction(_ sender: Any) {
         
@@ -78,23 +78,3 @@ class SignInViewController: UIViewController {
     }
 }
 
-extension SignInViewController {
-//    func setupSocket(){
-//
-//        let socket = manager.defaultSocket
-//
-//        socket.on(clientEvent: .connect) {data, ack in
-//            print("socket connected")
-//            socket.emit("socket message", "Hi Socket")
-//        }
-//
-//        socket.on("phong message") { data, ack in
-//            if let dataString: [String: String] = data[0] as? [String: String],  let test: String = dataString["msg"] {
-//
-//                print(test)
-//            }
-//
-//        }
-//        socket.connect()
-//    }
-}

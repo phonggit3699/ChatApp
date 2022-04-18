@@ -11,6 +11,8 @@
 		3D0BF72C27FFC8A2002DCF6C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0BF72B27FFC8A2002DCF6C /* ChatViewController.swift */; };
 		3D1DD4BC2803CF23002E1BF5 /* ResetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D1DD4BB2803CF23002E1BF5 /* ResetPasswordView.xib */; };
 		3D1DD4BE2803D078002E1BF5 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1DD4BD2803D078002E1BF5 /* ResetPasswordViewController.swift */; };
+		3D5F0B33280CF2BF00AF28D2 /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F0B32280CF2BF00AF28D2 /* FriendModel.swift */; };
+		3D5F0B35280CF3B900AF28D2 /* BaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F0B34280CF3B900AF28D2 /* BaseURL.swift */; };
 		3D6AD28F27FEDC1B000B4301 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6AD28E27FEDC1B000B4301 /* Extensions.swift */; };
 		3D7BBF28280074AA00A5220A /* ChatTBVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7BBF26280074AA00A5220A /* ChatTBVCell.swift */; };
 		3D7BBF29280074AA00A5220A /* ChatTBVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7BBF27280074AA00A5220A /* ChatTBVCell.xib */; };
@@ -42,6 +44,8 @@
 		3D0BF72B27FFC8A2002DCF6C /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		3D1DD4BB2803CF23002E1BF5 /* ResetPasswordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetPasswordView.xib; sourceTree = "<group>"; };
 		3D1DD4BD2803D078002E1BF5 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		3D5F0B32280CF2BF00AF28D2 /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
+		3D5F0B34280CF3B900AF28D2 /* BaseURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseURL.swift; sourceTree = "<group>"; };
 		3D6AD28E27FEDC1B000B4301 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		3D7BBF26280074AA00A5220A /* ChatTBVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTBVCell.swift; sourceTree = "<group>"; };
 		3D7BBF27280074AA00A5220A /* ChatTBVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatTBVCell.xib; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				3DF51A0E2805213200E508AC /* MessageModel.swift */,
+				3D5F0B32280CF2BF00AF28D2 /* FriendModel.swift */,
+				3D5F0B34280CF3B900AF28D2 /* BaseURL.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -307,6 +313,7 @@
 				3D6AD28F27FEDC1B000B4301 /* Extensions.swift in Sources */,
 				3D0BF72C27FFC8A2002DCF6C /* ChatViewController.swift in Sources */,
 				3DF7095E27FD30F20048CC96 /* SceneDelegate.swift in Sources */,
+				3D5F0B33280CF2BF00AF28D2 /* FriendModel.swift in Sources */,
 				3DAB060A27FE7C4600775498 /* CustomTabBarViewController.swift in Sources */,
 				3DF51A0C28051A3B00E508AC /* MessageCLVCell.swift in Sources */,
 				3DF7097227FD33940048CC96 /* SignInViewController.swift in Sources */,
@@ -315,6 +322,7 @@
 				3DAB061427FE931500775498 /* ProfileViewController.swift in Sources */,
 				3D1DD4BE2803D078002E1BF5 /* ResetPasswordViewController.swift in Sources */,
 				3DE6EBA728068335005CA04D /* ImageCLVCell.swift in Sources */,
+				3D5F0B35280CF3B900AF28D2 /* BaseURL.swift in Sources */,
 				3DAB060827FE79C300775498 /* ListChatViewController.swift in Sources */,
 				3DAB060627FE757600775498 /* SignUpViewController.swift in Sources */,
 			);
