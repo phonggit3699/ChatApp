@@ -38,7 +38,7 @@ class ChatViewController: UIViewController {
     
     var avatarImgUrl: String?
     
-    let userName: String = "Phong"
+    var userName: String = "Phong"
     
     var initialScrollDone: Bool = false
     
@@ -49,6 +49,10 @@ class ChatViewController: UIViewController {
     var isOpenImageLibrary: Bool = false
     
     let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(true), .compress])
+    
+    var from: String = "phong66"
+    
+    var to: String = "phong99"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,8 +95,13 @@ class ChatViewController: UIViewController {
         let socket = manager.defaultSocket
         
         if let newMessage = txtMessgae.text, newMessage != "" {
-            let newData: [String: String] = ["image": "", "name": "Phong", "message": newMessage]
-            socket.emit("phong message", newData)
+            let newData: [String: String] = ["image": "", "name": userName, "message": newMessage,"from": self.from, "to": self.to]
+            socket.emit("private message", newData)
+            
+            self.messages.append(MessageModel(image: "", name: userName, message: newMessage, toId: self.to))
+            
+            self.messageCollectionView.reloadData()
+            
             self.txtMessgae.text = ""
             
         }
@@ -216,6 +225,7 @@ extension ChatViewController {
     func setupUI() {
         if self.pushName != nil {
             self.lblName.text = pushName
+            self.userName = pushName!
         }
         
         if self.avatarImgUrl != nil {
@@ -260,21 +270,42 @@ extension ChatViewController {
     
     func setupSocket(){
         
+        
         let socket = manager.defaultSocket
+        
+        
+        socket.on(clientEvent: .disconnect) { data, ack in
+            print("socket disconnected")
+        }
+        
         
         socket.on(clientEvent: .connect) {data, ack in
             print("socket connected")
+            socket.emit("join", self.from)
         }
         
-        socket.on("phong message") { data, ack in
+//        socket.on("phong message") { data, ack in
+//            if let message: [String: String] = data[0] as? [String: String],  let name: String = message["name"], let image: String = message["image"], let messageNew: String = message["message"]  {
+//
+//                self.messages.append(MessageModel(image: image, name: name, message: messageNew, toId: ""))
+//
+//                self.messageCollectionView.reloadData()
+//                self.scrollToBottomCollectionView()
+//            }
+//        }
+        
+        socket.on("private message") { data, ack in
+            print("my", data)
             if let message: [String: String] = data[0] as? [String: String],  let name: String = message["name"], let image: String = message["image"], let messageNew: String = message["message"]  {
                 
-                self.messages.append(MessageModel(image: image, name: name, message: messageNew))
+                self.messages.append(MessageModel(image: image, name: name, message: messageNew, toId: ""))
                 
                 self.messageCollectionView.reloadData()
                 self.scrollToBottomCollectionView()
             }
         }
+
+        
         socket.connect()
     }
 }
@@ -358,7 +389,7 @@ extension ChatViewController: UICollectionViewDelegateFlowLayout {
         
         if collectionView == self.messageCollectionView {
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 256, height: 0))
-            if testMessage.count > 0 {
+            if messages.count > 0 {
                 label.text = messages[indexPath.row].message
             }
             

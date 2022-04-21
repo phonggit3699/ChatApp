@@ -8,3 +8,5 @@
 import Foundation
 
 let baseURL: String = "https://625cba9b95cd5855d615464d.mockapi.io/Friend/"
+
+let userBaseURL: String = "https://625cba9b95cd5855d615464d.mockapi.io/user/"

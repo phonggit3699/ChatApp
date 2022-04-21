@@ -7,6 +7,7 @@
 
 import UIKit
 import SocketIO
+import Alamofire
 
 
 class SignInViewController: UIViewController {
@@ -21,13 +22,12 @@ class SignInViewController: UIViewController {
     
     let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     
-//    let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(true), .compress])
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         btnLogin.layer.cornerRadius = 26
-        btnLogin.isEnabled = true
+        btnLogin.isEnabled = false
  
     }
     @IBAction func tfEmailEditingChanged(_ sender: Any) {
@@ -65,7 +65,12 @@ class SignInViewController: UIViewController {
 
         tabBarVC.modalPresentationStyle = .fullScreen
 
-        present(tabBarVC, animated: true)
+        login { isLogin in
+            if isLogin == true {
+                self.present(tabBarVC, animated: true)
+            }
+        }
+     
     
     }
     @IBAction func btnForgotPasswordActon(_ sender: Any) {
@@ -78,3 +83,36 @@ class SignInViewController: UIViewController {
     }
 }
 
+extension SignInViewController {
+    func login(handler: @escaping (Bool)->Void) {
+      
+        if let text = self.txtEmail.text, text != "" {
+            let loginUrl = userBaseURL + "?name=\(text.trimmingCharacters(in: .whitespaces))"
+            guard let loginUrl = loginUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+                return
+            }
+
+            AF.request(loginUrl).validate().responseDecodable(of: [UserModel].self) { (response) in
+                
+                if let error = response.error {
+                    print(error)
+                }
+                
+                if let value = response.value  {
+                    if value[0].name == text.trimmingCharacters(in: .whitespaces) {
+                        handler(true)
+                    }
+                    else{
+                        handler(false)
+                    }
+                }
+                else{
+                    handler(false)
+                }
+            }
+        }
+        else{
+            handler(false)
+        }
+    }
+}

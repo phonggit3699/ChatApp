@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class SignUpViewController: UIViewController {
     @IBOutlet var signInView: UIView!
@@ -22,7 +23,7 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        btnSignUp.isEnabled = false
+        btnSignUp.isEnabled = true
         
         btnSignUp.layer.cornerRadius = btnSignUp.frame.height / 2
     }
@@ -84,7 +85,36 @@ class SignUpViewController: UIViewController {
             btnSignUp.backgroundColor =  UIColor(named: "lightGray")
         }
     }
-    @IBAction func btnAcceptPrivacy(_ sender: Any) {
+
+    @IBAction func btnSignUpAction(_ sender: Any) {
+        signUp { isSignUp in
+            print(isSignUp)
+        }
     }
     
+}
+
+extension SignUpViewController{
+    func signUp(handler: @escaping (Bool)->Void) {
+        
+        let newUser: Parameters = [
+            "name": "Phong369",
+            "password": "123456",
+            "createdAt": "today"
+        
+        ]
+        AF.request(userBaseURL, method: .post, parameters: newUser).responseDecodable(of: UserModel.self) { (response) in
+            
+            if let error = response.error {
+                print(error)
+            }
+            
+            if response.value != nil {
+                handler(true)
+            }
+            else{
+                handler(false)
+            }
+        }
+    }
 }

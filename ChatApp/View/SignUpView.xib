@@ -133,6 +133,9 @@
                     <inset key="contentEdgeInsets" minX="0.0" minY="16" maxX="0.0" maxY="16"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="ĐĂNG KÝ"/>
+                    <connections>
+                        <action selector="btnSignUpAction:" destination="-1" eventType="touchUpInside" id="FBE-n9-Glo"/>
+                    </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FUs-Ob-SIf">
                     <rect key="frame" x="76.333333333333329" y="771" width="237.33333333333337" height="29"/>
